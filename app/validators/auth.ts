@@ -17,3 +17,13 @@ export const registerUserValidator = vine.compile(
     thumbnail: vine.file({extnames : ["jpg","jpeg", "png"],size : "10mb"}).optional()
   })
 )
+
+
+export const loginUserValidator = vine.compile(
+  vine.object({
+    email: vine.string().email(),
+
+    password: vine.string().minLength(8),
+
+  })
+)

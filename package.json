@@ -63,6 +63,7 @@
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "edge.js": "^6.2.1",
+    "jdenticon": "^3.3.0",
     "luxon": "^3.6.1",
     "reflect-metadata": "^0.2.2"
   },
