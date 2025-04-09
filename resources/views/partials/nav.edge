@@ -1,13 +1,24 @@
+
+@eval(await auth.use('web').check())
+
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">Mon Blog </a>
     <div>
-      <a href="{{route('auth.register')}}" class="btn btn-outline-info"> Inscription</a>
-      <a href="{{route('auth.login')}}" class="btn btn-outline-info"> Connexion </a>
-      <form action= "{{route ('auth.logout')}}?_method=DELETE" method="post">
-        {{ csrfField() }}
-        <button type="submit" class="btn btn-outline-warning"> Déconnexion </button>
-      </form>
+      @if(!auth.use('web').isAuthenticated)
+        <a href="{{route('auth.register')}}" class="btn btn-outline-info"> Inscription</a>
+        <a href="{{route('auth.login')}}" class="btn btn-outline-info"> Connexion </a>
+      @else
+        <div class="d-flex gap-3 align-items-center">
+            @!component('components/user-badge',{username : auth.use('web').user.username, thumbnail: auth.use('web').user.thumbnail})
+            <form action= "{{route ('auth.logout')}}?_method=DELETE" method="post">
+            {{ csrfField() }}
+            <button type="submit" class="btn btn-outline-warning"> Déconnexion </button>
+            </form>
+        </div>
+
+      @end
+
     </div>
   </div>
 </nav>
