@@ -27,7 +27,7 @@ export default class AuthController {
         await thumbnail.move(app.makePath("public/users"), {name :`${cuid()}.$thumbnail.extname`})
 
       }
-      console.log('after val')
+      //console.log('after val')
       const filePath =  `users/${thumbnail?.fileName || username + ".png"}`
       const res = await User.create({email, username,thumbnail: filePath, password})
       console.log(res)

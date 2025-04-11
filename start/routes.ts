@@ -12,6 +12,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import SocialController from '#controllers/social_controller'
 import ResetPasswordController from '#controllers/reset_password_controller'
+import PostController from '#controllers/post_controller'
 
 router.on('/').render('pages/home').as("home")
 router.get('/register',[AuthController,'register']).as("auth.register").use(middleware.guest())
@@ -34,3 +35,6 @@ router.get('/github/callback',[SocialController,'githubCallBack']).use(middlewar
 
 router.delete('/logout',[AuthController,'logout']).as("auth.logout").use(middleware.auth())
 
+router.get('/create/post',[PostController,'create']).as("post.create").use(middleware.auth())
+
+router.post('/create/post',[PostController,'store']).use(middleware.auth())
