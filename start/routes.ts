@@ -23,6 +23,10 @@ router.get('/forgot-password',[ResetPasswordController,'forgotPassword']).as("au
 
 router.post('/forgot-password',[ResetPasswordController,'handleForgotPassword']).use(middleware.guest())
 
+router.get('/reset-password',[ResetPasswordController,'resetPassword']).as("auth.reset-password").use(middleware.guest())
+
+router.post('/reset-password',[ResetPasswordController,'handleResetPassword']).as("auth.handleReset-password").use(middleware.guest())
+
 
 router.get('/github/redirect',[SocialController,'githubRedirect']).use(middleware.guest()).as("github.redirect")
 
