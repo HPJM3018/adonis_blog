@@ -10,10 +10,10 @@ export class FileUploaderService {
       await writeFile(`public/${path}/${identiconName}.png`,png,)
     }
     else{
-      await thumbnail.move(app.makePath("public/users"), {name :`${cuid()}.$thumbnail.extname`})
+      await thumbnail.move(app.makePath(`public/${path}`), {name :`${cuid()}.$thumbnail.extname`})
 
     }
     //console.log('after val')
-    const filePath =  `users/${thumbnail?.fileName || identiconName + ".png"}`
+    return `${path}/${thumbnail?.fileName || identiconName + ".png"}`
   }
 }
