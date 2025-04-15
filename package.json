@@ -65,8 +65,11 @@
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "edge.js": "^6.2.1",
+    "highlight.js": "^11.11.1",
     "jdenticon": "^3.3.0",
     "luxon": "^3.6.1",
+    "marked": "^15.0.8",
+    "marked-highlight": "^2.2.1",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {

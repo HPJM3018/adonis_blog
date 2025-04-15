@@ -15,6 +15,9 @@ import ResetPasswordController from '#controllers/reset_password_controller'
 import PostController from '#controllers/post_controller'
 
 router.get('/',[PostController, 'index']).as("home")
+
+router.get('/posts/:slug/:id',[PostController, 'show']).as("post.show").where('slug', router.matchers.slug()).where('id', router.matchers.number())
+
 router.get('/register',[AuthController,'register']).as("auth.register").use(middleware.guest())
 router.post('/register',[AuthController,'handleRegister']).use(middleware.guest())
 router.get('/login',[AuthController,'login']).as("auth.login").use(middleware.guest())
