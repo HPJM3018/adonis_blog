@@ -14,7 +14,7 @@ import SocialController from '#controllers/social_controller'
 import ResetPasswordController from '#controllers/reset_password_controller'
 import PostController from '#controllers/post_controller'
 
-router.on('/').render('pages/home').as("home")
+router.get('/',[PostController, 'index']).as("home")
 router.get('/register',[AuthController,'register']).as("auth.register").use(middleware.guest())
 router.post('/register',[AuthController,'handleRegister']).use(middleware.guest())
 router.get('/login',[AuthController,'login']).as("auth.login").use(middleware.guest())
