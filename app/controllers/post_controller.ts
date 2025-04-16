@@ -1,12 +1,13 @@
 import Post from '#models/post'
 import { FileUploaderService } from '#services/file_uploader_service'
-import { storePostValidator } from '#validators/post'
+import { storePostValidator, updatePostValidator } from '#validators/post'
 import { inject } from '@adonisjs/core'
 import stringHelpers from '@adonisjs/core/helpers/string'
 import type { HttpContext } from '@adonisjs/core/http'
 import {Marked} from 'marked'
 import {markedHighlight} from "marked-highlight"
 import hljs from 'highlight.js'
+import { unlink } from 'fs/promises'
 @inject()
 export default class PostController {
   constructor(private readonly fileUploaderService : FileUploaderService){}
@@ -79,12 +80,31 @@ export default class PostController {
   /**
    * Edit individual record
    */
-  async edit({ params }: HttpContext) {}
+  async edit({ params, view }: HttpContext) {
+    const {id} = params
+    const post = await Post.findByOrFail('id',id)
+    return view.render('pages/post/edit', {post})
+  }
 
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {}
+  async update({ params, request,session, response }: HttpContext) {
+    const {id} = params
+    const {content, thumbnail,title} = await request.validateUsing(updatePostValidator)
+    const post = await Post.findByOrFail('id',id)
+    const slug = post.title !== title && stringHelpers.slug(title)
+    if(thumbnail){
+      await unlink(`public/${post.thumbnail}`)
+      const filePath =  await this.fileUploaderService.upload(thumbnail, '','posts')
+      post.merge({thumbnail : filePath})
+    }
+    if(slug) post.merge({title, slug})
+    if(post.content != content) post.merge({content})
+      await post.save()
+      session.flash('success', "votre post a été bien modifier")
+      return response.redirect().toRoute('home')
+  }
 
   /**
    * Delete record

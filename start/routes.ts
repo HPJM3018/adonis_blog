@@ -17,6 +17,9 @@ import PostController from '#controllers/post_controller'
 router.get('/',[PostController, 'index']).as("home")
 
 router.get('/posts/:slug/:id',[PostController, 'show']).as("post.show").where('slug', router.matchers.slug()).where('id', router.matchers.number())
+router.get('/posts/:id/edit',[PostController, 'edit']).as("post.edit").where('id', router.matchers.number()).use(middleware.auth())
+
+router.put('/posts/:id/edit',[PostController, 'update']).as("post.update").where('id', router.matchers.number()).use(middleware.auth())
 
 router.get('/register',[AuthController,'register']).as("auth.register").use(middleware.guest())
 router.post('/register',[AuthController,'handleRegister']).use(middleware.guest())
