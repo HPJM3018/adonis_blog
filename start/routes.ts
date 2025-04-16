@@ -21,10 +21,13 @@ router.get('/posts/:id/edit',[PostController, 'edit']).as("post.edit").where('id
 
 router.put('/posts/:id/edit',[PostController, 'update']).as("post.update").where('id', router.matchers.number()).use(middleware.auth())
 
+router.delete('/posts/:id/delete',[PostController, 'destroy']).as("post.delete").where('id', router.matchers.number()).use(middleware.auth())
+
+
 router.get('/register',[AuthController,'register']).as("auth.register").use(middleware.guest())
 router.post('/register',[AuthController,'handleRegister']).use(middleware.guest())
 router.get('/login',[AuthController,'login']).as("auth.login").use(middleware.guest())
-router.post('/login',[AuthController,'handleLogin']).use(middleware.guest())
+router.post('/login',[AuthController,'handleLogin']).use(middleware.guest()).as('auth.handlelogin')
 
 router.get('/forgot-password',[ResetPasswordController,'forgotPassword']).as("auth.forgot-password").use(middleware.guest())
 
